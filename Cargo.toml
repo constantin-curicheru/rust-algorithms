@@ -1,0 +1,8 @@
+[workspace]
+members = [
+    "cses",
+    "leetcode",
+    "info_arena",
+    "templates"
+]
+resolver = "3"
