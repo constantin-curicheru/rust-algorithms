@@ -25,12 +25,12 @@ impl Solution {
         c: usize,
         index: usize
     ) -> bool {
-        if index == word.len() {
-            return true;
-        }
-
         if r >= board.len() || c >= board[0].len() || board[r][c] != word[index] {
             return false;
+        }
+
+        if index == word.len() - 1 {
+            return true;
         }
 
         // marking it as we used the letter
