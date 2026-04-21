@@ -12,6 +12,9 @@ dependencies = [
 [[package]]
 name = "info_arena"
 version = "0.1.0"
+dependencies = [
+ "templates",
+]
 
 [[package]]
 name = "leetcode"
