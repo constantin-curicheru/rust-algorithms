@@ -26,14 +26,34 @@ fn solve_graph<R: BufRead>(sc: &mut Scanner<R>) -> bool {
         edges.push(Edge { u, v, w });
     }
 
-    // Regula 1: Distanța de la sursă la ea însăși trebuie să fie 0
+    // 1. Validare Sursă
     if d[s] != 0 {
         return false;
     }
 
-    // Regula 2: Inegalitatea triunghiului
+    // 2. Validare inegalitate triunghi
     for edge in &edges {
         if d[edge.u] + edge.w < d[edge.v] || d[edge.v] + edge.w < d[edge.u] {
+            return false;
+        }
+    }
+
+    // 3. Validare Justificare Drumuri
+    let mut justified = vec![false; n + 1];
+    justified[s] = true; // Sursa este justificată implicit de costul 0
+
+    for edge in &edges {
+        if d[edge.u] + edge.w == d[edge.v] {
+            justified[edge.v] = true;
+        }
+        if d[edge.v] + edge.w == d[edge.u] {
+            justified[edge.u] = true;
+        }
+    }
+
+    // Dacă există cel puțin un nod care nu a putut fi justificat, configurarea e greșită
+    for i in 1..=n {
+        if !justified[i] {
             return false;
         }
     }
@@ -51,7 +71,7 @@ fn main() {
     let t: usize = sc.next();
     for _ in 0..t {
         if solve_graph(&mut sc) {
-            println!("DA (Partial)");
+            println!("DA");
         } else {
             println!("NU");
         }
